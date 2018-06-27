@@ -10,7 +10,7 @@ var tnc = new ax25.kissTNC(
       baudRate : 9600
     }
 );
-
+///dev/tty.SLAB_USBtoUART
 console.log('TNC set...');
 
 function send_string(str) {
