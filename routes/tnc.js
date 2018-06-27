@@ -6,7 +6,7 @@ var messageString = '';
 console.log('Turn Kenwood THD72A on and set to Packet 12 \nPressing TNC');
 
 var tnc = new ax25.kissTNC(
-    {	serialPort : "/dev/ttyUSB2",
+    {	serialPort : "/dev/tty.SLAB_USBtoUART",
       baudRate : 9600
     }
 );
