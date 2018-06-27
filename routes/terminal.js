@@ -11,3 +11,5 @@ router.post('/terminal', function(req, res) {
     //res.render('terminal', { title: 'Hello, Terminal' });
     res.send('POST Handler for the /terminal endppint');
 });
+
+module.exports = router;
