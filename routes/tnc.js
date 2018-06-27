@@ -3,10 +3,10 @@ var router = express.Router();
 var ax25 = require('th-d72-ax25');
 
 var messageString = '';
-console.log('Turn Kenwood THD72A On  and set to Packet 12 \n Pressing TNC');
+console.log('Turn Kenwood THD72A on and set to Packet 12 \nPressing TNC');
 
 var tnc = new ax25.kissTNC(
-    {	serialPort : "/dev/ttyUSB0",
+    {	serialPort : "/dev/ttyUSB2",
       baudRate : 9600
     }
 );
@@ -23,7 +23,7 @@ function send_string(str) {
             'sourceSSID'			: 2,
             'pollFinal'				: true,
             'command'				: true,
-            'type'					: ax25.Defs.I_FRAME,
+            'type'					: ax25.Defs.U_FRAME_UI,
             'nr'					: 1,
             'ns'					: 3,
             'pid'					: ax25.Defs.PID_NONE,
@@ -31,10 +31,7 @@ function send_string(str) {
         }
     );
     console.log(packet);
-
-
-
-
+ 
 
     // packet.type = ax25.Defs.U_FRAME_UI;
     // packet.sourceCallsign = 'KM6TIG';
