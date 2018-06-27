@@ -13,17 +13,17 @@ var tnc = new ax25.kissTNC(
 
 console.log('TNC set...');
 
-// function send_string(str) {
+function send_string(str) {
 
-//     const packet = new ax25.Packet();
-//     packet.type = ax25.Defs.U_FRAME_UI;
-//     packet.sourceCallsign = 'KM6TIG';
-//     packet.sourceSSID = 1;
-//     packet.destinationCallsign = 'KM6TIG';
-//     packet.destinationSSID = 2;
-//     packet.infoString == 'HELLO Stupid test string';
-//     tnc.send(packet.assemble(), () => console.log('Sent:', str));
-// }
+    const packet = new ax25.Packet();
+    packet.type = ax25.Defs.U_FRAME_UI;
+    packet.sourceCallsign = 'KM6TIG';
+    packet.sourceSSID = 1;
+    packet.destinationCallsign = 'KM6TIG';
+    packet.destinationSSID = 2;
+    packet.infoString == 'HELLO Stupid test string';
+    tnc.send(packet.assemble(), () => console.log('Sent:', str));
+}
 
 
 
