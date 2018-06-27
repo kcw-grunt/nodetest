@@ -30,7 +30,7 @@ function send_string(str) {
             'infoString'			: "Your mother."
         }
     );
-
+    console.log(packet);
 
 
 
