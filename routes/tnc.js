@@ -10,6 +10,15 @@ var tnc = new ax25.kissTNC(
       baudRate : 9600
     }
 );
+
+var port = tnc.serialPort;
+port.list(function (err, ports) {
+    ports.forEach(function(port) {
+      console.log(port.comName);
+      console.log(port.pnpId);
+      console.log(port.manufacturer);
+    });
+  });
 ///dev/ttyUSB0
 console.log('TNC set...');
 
