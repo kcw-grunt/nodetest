@@ -83,5 +83,18 @@ router.get('/echotest/kiss', function (req,res, next) {
     res.send('KISS started')
 });
 
+router.get('/func/', function (req,res){
+
+    let fun = req.query.funcId; 
+    switch (fun) {
+        case '1':
+        res.send('First is best')
+        case '2':
+        res.send('Second is ok')
+        default:
+        res.send('DEFAULT')
+    }
+});
+
 module.exports = router;
 
