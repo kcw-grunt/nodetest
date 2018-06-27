@@ -42,8 +42,6 @@ function send_string(str) {
     tnc.send(packet.assemble(), () => console.log('Sent:', str));
 }
 
-
-
 router.get('/', function (req,res) {
     //res.send('GET handler for the /tnc route');
     messageString = 'Send test packet';
