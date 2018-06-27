@@ -54,11 +54,5 @@ router.get('/echotest/kiss', function (req,res, next) {
     res.send('KISS started')
 });
 
-
- 
-
-
-
-
 module.exports = router;
 
