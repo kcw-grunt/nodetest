@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
-
+var port = require('serialport');
 var messageString = '';
 console.log('Turn Kenwood THD72A on and set to Packet 12 \nPressing TNC');
 
@@ -10,15 +10,8 @@ var tnc = new ax25.kissTNC(
       baudRate : 9600
     }
 );
-
-var port = tnc.serialPort;
-port.list(function (err, ports) {
-    ports.forEach(function(port) {
-      console.log(port.comName);
-      console.log(port.pnpId);
-      console.log(port.manufacturer);
-    });
-  });
+  
+ 
 ///dev/ttyUSB0
 console.log('TNC set...');
 
