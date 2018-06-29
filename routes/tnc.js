@@ -1,12 +1,32 @@
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
-var port = require('serialport');
 var messageString = '';
 console.log('Turn Kenwood THD72A on and set to Packet 12 \nPressing TNC');
 
+
+
+var SerialPort = require('serialport');
+var devicePath = '/dev/ttyUSB0'; 
+const parsers = SerialPort.parsers;
+// Use a `\r\n` as a line terminator
+const parser = new parsers.Readline({
+    delimiter: '\r\n'
+  }); 
+
+// Set port path regardless of OS
+ax25.kissTNC.serialPort.list(function (err, ports) {
+    ports.forEach(function(port) {
+      if (port.comName === '/dev/tty.SLAB_USBtoUART' || port.comName === '/dev/ttyUSB0') {
+        devicePath = port.comName;
+      }
+});
+
+console.log('Selected port: '+ devicePath +'\n');
+
+ 
 var tnc = new ax25.kissTNC(
-    {	serialPort : "/dev/tty.SLAB_USBtoUART",
+    {	serialPort : devicePath,
       baudRate : 9600
     }
 );
