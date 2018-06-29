@@ -34,15 +34,13 @@ var tnc = new ax25.kissTNC(
 var testpacket = new ax25.Packet(
 	{	'sourceCallsign' : "KM6TIG",
 		'sourceSSID' : 1,
-		'destinationCallsign' : "",
+		'destinationCallsign' : "KM6TIG",
 		'destinationSSID' : 2,
 		'type' : ax25.Defs.U_FRAME_UI,
 		'infoString' : "Hello world!"
 	}
-);
-
-console.log(testpacket.sourceCallsign);
-
+); 
+ 
 var beacon = function() {
 	var frame = testpacket.assemble();
 	tnc.send(frame);
@@ -52,6 +50,7 @@ var beacon = function() {
 tnc.enterD72KISS();
 
 tnc.sendRAWPacket('SE');
+tnc.sendRAWPacket('MON ON');
  
 tnc.on(
 	"opened",
