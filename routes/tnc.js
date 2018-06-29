@@ -3,10 +3,9 @@ var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var SerialPort = require('serialport');
 var util = require('util');
-var messageString = '';
-console.log('Turn Kenwood THD72A on and set to Packet 12 \nPressing TNC');
-
 var devicePath = '/dev/ttyUSB0'; 
+console.log('Selected port: '+ devicePath +'\n');
+
 const parsers = SerialPort.parsers;
 // Use a `\r\n` as a line terminator
 const parser = new parsers.Readline({
@@ -25,43 +24,35 @@ const parser = new parsers.Readline({
 //       }
 //     });
 // });
- 
-
-console.log('Selected port: '+ devicePath +'\n');
-
- 
+  
 var tnc = new ax25.kissTNC(
     {	serialPort : devicePath,
       baudRate : 9600
     }
-);
-   
-console.log('TNC set...');
+); 
 
-//port.on('open', showPortOpen);
 var beacon = function() {
 	var packet = new ax25.Packet(
-		{	sourceCallsign : "KM6TIG",
-			sourceSSID : 1,
-			destinationCallsign : "VEX0",
-			destinationSSID : 2,
-			type : ax25.Defs.U_FRAME_UI,
-			infoString : "Hello world!"
+		{	'sourceCallsign' : "KM6TIG",
+			'sourceSSID' : 1,
+			'destinationCallsign' : "KM6TIG",
+			'destinationSSID' : 2,
+			'type' : ax25.Defs.U_FRAME_UI,
+			'infoString' : "Hello world!"
 		}
 	);
 	var frame = packet.assemble();
 	tnc.send(frame);
 	console.log("Beacon sent");
 }
- 
-
+  
 tnc.enterD72KISS();
 
 tnc.on(
 	"opened",
 	function() {
 		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
-		setInterval(beacon, 30000);
+		setInterval(beacon, 60000);
 	}
 );
 
