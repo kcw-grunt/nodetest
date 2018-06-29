@@ -38,14 +38,29 @@ var tnc = new ax25.kissTNC(
 console.log('TNC set...');
 
 //port.on('open', showPortOpen);
+var beacon = function() {
+	var packet = new ax25.Packet(
+		{	sourceCallsign : "KM6TIG",
+			sourceSSID : 1,
+			destinationCallsign : "VEX0",
+			destinationSSID : 2,
+			type : ax25.Defs.U_FRAME_UI,
+			infoString : "Hello world!"
+		}
+	);
+	var frame = packet.assemble();
+	tnc.send(frame);
+	console.log("Beacon sent");
+}
+ 
 
-var packet = new ax25.Packet(
-	{	sourceCallsign : "KM6TIG",
-	    sourceSSID : 1,
-		destinationCallsign : "VEX0",
-		destinationSSID : 2,
-		type : ax25.Defs.U_FRAME_UI,
-		infoString : "Hello world!"
+ 
+
+tnc.on(
+	"opened",
+	function() {
+		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
+		setInterval(beacon, 30000);
 	}
 );
 
@@ -64,34 +79,6 @@ tnc.on(
 		);
 		if(packet.infoString != "")
 			console.log(packet.infoString);
-	}
-);
-
-tnc.on(
-	"error",
-	function(err) {
-		console.log("HURRRRR! I DONE BORKED!" + err);
-	}
-);
-
-tnc.on(
-	"close",
-	function(close) {
-		console.log("Port closed");
-	}
-);
-
-tnc.on(
-	"opened",
-	function() {
-		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
-	}
-);
-
-tnc.on(
-	"exitKISS",
-	function(exitKISS) {
-		console.log("Exit KISS");
 	}
 );
 
