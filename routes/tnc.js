@@ -6,11 +6,11 @@ var util = require('util');
 var devicePath = '/dev/ttyUSB0'; 
 console.log('Selected port: '+ devicePath +'\n');
 
-// const parsers = SerialPort.parsers;
-// // Use a `\r\n` as a line terminator
-// const parser = new parsers.Readline({
-//     delimiter: '\r\n'
-//   }); 
+const parsers = SerialPort.parsers;
+// Use a `\r\n` as a line terminator
+const parser = new parsers.Readline({
+    delimiter: '\r\n'
+  }); 
 
 //Set port path regardless of OS
 
