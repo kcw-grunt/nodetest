@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var SerialPort = require('serialport');
+var util = require('util');
 var messageString = '';
 console.log('Turn Kenwood THD72A on and set to Packet 12 \nPressing TNC');
 
