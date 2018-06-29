@@ -51,6 +51,8 @@ var beacon = function() {
   
 tnc.enterD72KISS();
 
+tnc.sendRAWPacket('SE');
+ 
 tnc.on(
 	"opened",
 	function() {
