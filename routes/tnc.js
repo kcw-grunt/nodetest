@@ -55,7 +55,7 @@ var beacon = function() {
 }
  
 
- 
+tnc.enterD72KISS();
 
 tnc.on(
 	"opened",
