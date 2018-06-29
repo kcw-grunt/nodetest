@@ -34,10 +34,68 @@ var tnc = new ax25.kissTNC(
       baudRate : 9600
     }
 );
-  
- 
-///dev/ttyUSB0
+   
 console.log('TNC set...');
+
+//port.on('open', showPortOpen);
+
+var packet = new ax25.Packet(
+	{	sourceCallsign : "KM6TIG",
+	    sourceSSID : 1,
+		destinationCallsign : "VEX0",
+		destinationSSID : 2,
+		type : ax25.Defs.U_FRAME_UI,
+		infoString : "Hello world!"
+	}
+);
+
+tnc.on(
+	"frame",
+	function(frame) {
+		var packet = new ax25.Packet({ 'frame' : frame });
+		console.log(
+			util.format(
+				"Packet seen from %s-%s to %s-%s.",
+				packet.sourceCallsign,
+				packet.sourceSSID,
+				packet.destinationCallsign,
+				packet.destinationSSID
+			)
+		);
+		if(packet.infoString != "")
+			console.log(packet.infoString);
+	}
+);
+
+tnc.on(
+	"error",
+	function(err) {
+		console.log("HURRRRR! I DONE BORKED!" + err);
+	}
+);
+
+tnc.on(
+	"close",
+	function(close) {
+		console.log("Port closed");
+	}
+);
+
+tnc.on(
+	"opened",
+	function() {
+		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
+	}
+);
+
+tnc.on(
+	"exitKISS",
+	function(exitKISS) {
+		console.log("Exit KISS");
+	}
+);
+
+
 
 router.get('/', function (req,res) {
     //res.send('GET handler for the /tnc route');
