@@ -31,17 +31,20 @@ var tnc = new ax25.kissTNC(
     }
 ); 
 
+var testpacket = new ax25.Packet(
+	{	'sourceCallsign' : "KM6TIG",
+		'sourceSSID' : 1,
+		'destinationCallsign' : "",
+		'destinationSSID' : 2,
+		'type' : ax25.Defs.U_FRAME_UI,
+		'infoString' : "Hello world!"
+	}
+);
+
+console.log(testpacket.sourceCallsign);
+
 var beacon = function() {
-	var packet = new ax25.Packet(
-		{	'sourceCallsign' : "KM6TIG",
-			'sourceSSID' : 1,
-			'destinationCallsign' : "KM6TIG",
-			'destinationSSID' : 2,
-			'type' : ax25.Defs.U_FRAME_UI,
-			'infoString' : "Hello world!"
-		}
-	);
-	var frame = packet.assemble();
+	var frame = testpacket.assemble();
 	tnc.send(frame);
 	console.log("Beacon sent");
 }
