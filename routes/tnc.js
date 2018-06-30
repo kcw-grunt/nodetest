@@ -55,7 +55,7 @@ tnc.on(
 	"opened",
 	function() {
 		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
-		setInterval(beacon, 60000);
+		setInterval(beacon, 20000);
 	}
 );
 
