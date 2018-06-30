@@ -49,7 +49,7 @@ var beacon = function() {
   
 tnc.enterD72KISS();
 
-tnc.startCONV('Hello');
+//tnc.startCONV('Hello');
  
 tnc.on(
 	"opened",
