@@ -105,6 +105,7 @@ router.get('/sender/:senderCallsign/sid/:ssid_s/destination/:destCallsign/did/:s
 	const dcsID = req.params.destCallsign;
 	const dssID = req.params.ssid_d;
 	const messageID = req.params.messageText; 
+	console.log('Params:' + scsID +  scsssID + dcsID + dssID + messageID);
 
 	if (scsID != "" || scsssID != "" || dcsID != "" || dssID != "" || messageID != "") {
 		sendTestMessage(scsID,scsssID,dcsID,dssID,messageID);
