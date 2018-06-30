@@ -27,24 +27,30 @@ const parser = new parsers.Readline({
   
 var tnc = new ax25.kissTNC(
     {	serialPort : devicePath,
-      baudRate : 9600
+	  baudRate : 9600
     }
 ); 
-
-var testpacket = new ax25.Packet(
-	{	'sourceCallsign' : "KM6TIG",
-		'sourceSSID' : 1,
-		'destinationCallsign' : "KM6TIG",
-		'destinationSSID' : 2,
-		'type' : ax25.Defs.U_FRAME_UI,
-		'infoString' : "Hello world!"
-	}
-); 
  
-var beacon = function() {
+ 
+// var beacon = function() {
+// 	var frame = testpacket.assemble();
+// 	tnc.send(frame);
+// 	console.log("Beacon sent");
+// }
+
+var sendTestMessage = function(scs,sssid,dcs,dssid,text) {
+	var testpacket = new ax25.Packet(
+		{	'sourceCallsign' : scs,
+			'sourceSSID' : sssid,
+			'destinationCallsign' : dcs,
+			'destinationSSID' : dssid,
+			'type' : ax25.Defs.U_FRAME_UI,
+			'infoString' : text
+		}
+	); 
 	var frame = testpacket.assemble();
 	tnc.send(frame);
-	console.log("Beacon sent");
+	console.log('Test message sent');
 }
   
 tnc.enterD72KISS();
@@ -55,7 +61,7 @@ tnc.on(
 	"opened",
 	function() {
 		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
-		setInterval(beacon, 20000);
+		//setInterval(beacon, 20000);
 	}
 );
 
@@ -93,11 +99,21 @@ router.get('/sender/:senderCallsign/destination/:destCallsign', function (req,re
     //This sends a JSON  res.send(req.params) 
 });
 
-router.get('/sender/:senderCallsign/destination/:destCallsign/message/:messageText', function (req,res) {
-     
+router.get('/sender/:senderCallsign/sid/:ssid_s/destination/:destCallsign/did/:ssid_d/message/:messageText', function (req,res) {
+	const scsID = req.params.senderCallsign;
+	const scsssID = req.params.ssid_s;
+	const dcsID = req.params.destCallsign;
+	const dssID = req.params.ssid_d;
+	const messageID = req.params.messageText; 
+
+	if (scsID != "" || scsssID != "" || dcsID != "" || dssID != "" || messageID != "") {
+		sendTestMessage(scsID,scsssID,dcsID,dssID,messageID);
+		res.send({response:messageID});
+	} else {
+		console.log('Error: All parameters needed to send a message');
+	} 
 });
-
-
+ 
 
 router.get('/func/', function (req,res){
 
