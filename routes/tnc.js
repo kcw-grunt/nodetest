@@ -89,14 +89,20 @@ tnc.on(
 
 
 
-router.get('/', function (req,res) {
-    //res.send('GET handler for the /tnc route');
-
+router.get('/', function (req,res) { 
+	res.render('index', { title: 'TNC Page' });
 });
-
+ 
 router.post('/', function (req,res) {
     //res.send('POST handler for the /tnc route');
 });
+
+router.post('/sendmessage', function (req,res) {
+	//res.send('POST handler for the /tnc route');
+	
+});
+
+
 
 router.get('/sender/:senderCallsign/destination/:destCallsign', function (req,res) {
 
