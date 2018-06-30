@@ -38,7 +38,7 @@ var tnc = new ax25.kissTNC(
 // 	console.log("Beacon sent");
 // }
 
-sendTestMessage(scs,sssid,dcs,dssid,text) {
+function sendTestMessage(scs,sssid,dcs,dssid,text) {
 	var testpacket = new ax25.Packet(
 		{	'sourceCallsign' : scs,
 			'sourceSSID' : sssid,
