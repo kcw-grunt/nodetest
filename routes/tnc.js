@@ -107,12 +107,13 @@ router.get('/sender/:senderCallsign/sid/:ssid_s/destination/:destCallsign/did/:s
 	const messageID = req.params.messageText; 
 	console.log('Params:' + scsID +  scsssID + dcsID + dssID + messageID);
 
-	if (scsID != "" || scsssID != "" || dcsID != "" || dssID != "" || messageID != "") {
-		sendTestMessage(scsID,scsssID,dcsID,dssID,messageID);
-		res.send({response:messageID});
-	} else {
-		console.log('Error: All parameters needed to send a message');
-	} 
+	sendTestMessage(scsID,scsssID,dcsID,dssID,messageID);
+	res.send({response:messageID});
+	// if (scsID != "" || scsssID != "" || dcsID != "" || dssID != "" || messageID != "") {
+
+	// } else {
+	// 	console.log('Error: All parameters needed to send a message');
+	// } 
 });
  
 
