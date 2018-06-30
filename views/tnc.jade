@@ -1,5 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= title 
+  form(name="/sendmessage", method="post")
+        div.input
+            span.label Source Radio
+            input(type="text", name="source-callsign") 
+            input(type="text", name="source-ssid")
+            br
+        div.input
+            span.label Destination Radio
+            input(type="text", name="dest-callsign") 
+            input(type="text", name="dest-ssid")
+            br
+        div.input
+            span.label Description
+            textarea(name="description", cols="40", rows="5")
+        div.actions
+            input(type="submit", value="add")
