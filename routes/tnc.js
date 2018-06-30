@@ -90,7 +90,7 @@ tnc.on(
 
 
 router.get('/', function (req,res) { 
-	res.render('index', { title: 'TNC Page' });
+	res.render('tnc', { title: 'TNC Page' });
 });
  
 router.post('/', function (req,res) {
@@ -99,7 +99,8 @@ router.post('/', function (req,res) {
 
 router.post('/sendmessage', function (req,res) {
 	//res.send('POST handler for the /tnc route');
-	
+	//res.send('sendmessage POST handler');
+	console.log(req.body);
 });
 
 

@@ -43,4 +43,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.post('/sendmessage', function (req,res) {
+	//res.send('POST handler for the /tnc route');
+	//res.send('sendmessage POST handler');
+	console.log(req.body);
+});
+
 module.exports = app;
