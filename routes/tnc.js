@@ -107,7 +107,7 @@ router.post('/sendmessage', function (req,res) {
 	// console.log(ms);
 	// res.send('POST handler for the /tnc route');
 	sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
-	res.redirect('/tnc');
+	//res.redirect('/tnc');
   });
 
 // router.get('/func/', function (req,res){
