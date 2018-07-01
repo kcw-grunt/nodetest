@@ -40,7 +40,7 @@ var tnc = new ax25.kissTNC(
 
 function sendTestMessage(scs,sssid,dcs,dssid,text) {
 
-	console.log('inside send test message');
+	console.log('inside send test message' + scs + sssid + "\n"+ dcs+ dssid +"\n"+ text+ "\n" );
 
 	var testpacket = new ax25.Packet(
 		{	'sourceCallsign' : scs,
