@@ -38,23 +38,24 @@ var tnc = new ax25.kissTNC(
 // 	console.log("Beacon sent");
 // }
 
-function sendTestMessage(scs,sssid,dcs,dssid,text) {
+function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 
-	console.log('inside send test message' + scs + sssid + "\n"+ dcs+ dssid +"\n"+ text+ "\n" );
+	console.log('inside send test message');
+	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
 
-	var testpacket = new ax25.Packet(
-		{	'sourceCallsign' : scs,
-			'sourceSSID' : sssid,
-			'destinationCallsign' : dcs,
-			'destinationSSID' : dssid,
-			'type' : ax25.Defs.U_FRAME_UI,
-			'infoString' : text
-		}
-	);
-	console.log(testpacket);
-	var frame = testpacket.assemble();
-	tnc.send(frame);
-	console.log('Test message sent');
+	// var testpacket = new ax25.Packet(
+	// 	{	'sourceCallsign' : scs,
+	// 		'sourceSSID' : sssid,
+	// 		'destinationCallsign' : dcs,
+	// 		'destinationSSID' : dssid,
+	// 		'type' : ax25.Defs.U_FRAME_UI,
+	// 		'infoString' : text
+	// 	}
+	// );
+	// console.log(testpacket);
+	// var frame = testpacket.assemble();
+	// tnc.send(frame);
+	// console.log('Test message sent');
 }
   
 tnc.enterD72KISS();
