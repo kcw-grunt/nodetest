@@ -97,6 +97,7 @@ router.post('/', function (req,res) {
 });
 
 router.post('/sendmessage', function (req,res) {
+	console.log('inside post');
 	var sourceid = req.body.ssids
 	var sourcecallsign = req.body.srccs
 	var destcallsign = req.body.destcs
