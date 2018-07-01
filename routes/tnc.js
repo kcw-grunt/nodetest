@@ -42,20 +42,22 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 
 	console.log('inside send test message');
 	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
-
-	// var testpacket = new ax25.Packet(
-	// 	{	'sourceCallsign' : scs,
-	// 		'sourceSSID' : sssid,
-	// 		'destinationCallsign' : dcs,
-	// 		'destinationSSID' : dssid,
-	// 		'type' : ax25.Defs.U_FRAME_UI,
-	// 		'infoString' : text
-	// 	}
-	// );
-	// console.log(testpacket);
-	// var frame = testpacket.assemble();
-	// tnc.send(frame);
-	// console.log('Test message sent');
+	var ssid_s = parseInt(sssid, 10);
+	var ssid_d = parseInt(dssid, 10);
+	console.log('ssds:'+ ssid_s + 'ssdd' + ssid_d);
+	var testpacket = new ax25.Packet(
+		{	'sourceCallsign' : scs,
+			'sourceSSID' : ssid_s,
+			'destinationCallsign' : dcs,
+			'destinationSSID' : ssid_d,
+			'type' : ax25.Defs.U_FRAME_UI,
+			'infoString' : message_tx
+		}
+	);
+	//console.log(testpacket);
+	var frame = testpacket.assemble();
+	tnc.send(frame);
+	console.log('Test message sent');
 }
   
 tnc.enterD72KISS();
