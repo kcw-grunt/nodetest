@@ -5,5 +5,10 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Onda Terminal Node' });
 });
+
+// router.get('/tnc', function(req, res, next) {
+//   res.render('tnc', { title: 'Onda Terminal Node' });
+// });
  
+  
 module.exports = router;

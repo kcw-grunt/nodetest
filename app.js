@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyparser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var tncRouter   = require('./routes/tnc');
@@ -10,6 +11,15 @@ var terminalRouter   = require('./routes/terminal');
 
 
 var app = express();
+app.use(bodyparser.urlencoded({extended: true}));
+app.use(bodyparser.json());
+///Define configs prior to route declaration
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 //Route all subdirectories
 app.use('/', indexRouter);
@@ -20,17 +30,10 @@ app.use('/terminal', terminalRouter);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -43,10 +46,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.post('/sendmessage', function (req,res) {
-	//res.send('POST handler for the /tnc route');
-	//res.send('sendmessage POST handler');
-	console.log(req.body);
+
+// catch 404 and forward to error handler
+///MUST Be last so route prior can be found
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
 module.exports = app;

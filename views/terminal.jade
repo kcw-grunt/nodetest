@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    form(name="add-estimation", method="post", action="/term")
+        div.input
+            span.label Title
+            input(type="text", name="ar")
+        div.actions
+            input(type="submit", value="add")

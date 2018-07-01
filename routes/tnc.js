@@ -86,8 +86,7 @@ tnc.on(
 			console.log(packet.infoString);
 	}
 );
-
-
+ 
 
 router.get('/', function (req,res) { 
 	res.render('tnc', { title: 'TNC Page' });
@@ -98,47 +97,30 @@ router.post('/', function (req,res) {
 });
 
 router.post('/sendmessage', function (req,res) {
-	//res.send('POST handler for the /tnc route');
-	//res.send('sendmessage POST handler');
-	console.log(req.body);
-});
+	var sourceid = req.body.ssids
+	var sourcecallsign = req.body.srccs
+	var destcallsign = req.body.destcs
+	var destssid = req.body.ssidd
+	var messagetext = req.body.message 
+	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" Source SSID = "+sourceid+"\nDest Callsign = "+destcallsign+" Dest SSID = "+destssid);
+	//console.log({source_callsign:sourcecallsign,source_id:sourceid,dest_callsign:destcallsign,dest_ssid:destssid,message_tx:messagetext});
+	// console.log(ms);
+	// res.send('POST handler for the /tnc route');
+	sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
+	res.redirect('/tnc');
+  });
 
+// router.get('/func/', function (req,res){
 
-
-router.get('/sender/:senderCallsign/destination/:destCallsign', function (req,res) {
-
-    //This sends a JSON  res.send(req.params) 
-});
-
-router.get('/sender/:senderCallsign/sid/:ssid_s/destination/:destCallsign/did/:ssid_d/message/:messageText', function (req,res) {
-	const scsID = req.params.senderCallsign;
-	const scsssID = req.params.ssid_s;
-	const dcsID = req.params.destCallsign;
-	const dssID = req.params.ssid_d;
-	const messageID = req.params.messageText; 
-	console.log('Params:' + scsID +  scsssID + dcsID + dssID + messageID);
-
-	sendTestMessage(scsID,scsssID,dcsID,dssID,messageID);
-	res.send({response:messageID});
-	// if (scsID != "" || scsssID != "" || dcsID != "" || dssID != "" || messageID != "") {
-
-	// } else {
-	// 	console.log('Error: All parameters needed to send a message');
-	// } 
-});
- 
-
-router.get('/func/', function (req,res){
-
-    // let fun = req.query.funcId; 
-    // switch (fun) {
-    //     case '1':
-    //     res.send('First is best');
-    //     case '2':
-    //     res.send('Second is ok');
-    //     default:
-    //     res.send('DEFAULT');
-    // }
-});
+//     // let fun = req.query.funcId; 
+//     // switch (fun) {
+//     //     case '1':
+//     //     res.send('First is best');
+//     //     case '2':
+//     //     res.send('Second is ok');
+//     //     default:
+//     //     res.send('DEFAULT');
+//     // }
+// });
 
 module.exports = router;
