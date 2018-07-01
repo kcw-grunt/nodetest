@@ -106,8 +106,8 @@ router.post('/sendmessage', function (req,res) {
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" Source SSID = "+sourceid+"\nDest Callsign = "+destcallsign+" Dest SSID = "+destssid);
 	//console.log({source_callsign:sourcecallsign,source_id:sourceid,dest_callsign:destcallsign,dest_ssid:destssid,message_tx:messagetext});
 	// console.log(ms);
-	// res.send('POST handler for the /tnc route');
-	sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
+	res.send('POST for message');
+	//sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
 	//res.redirect('/tnc');
   });
 
