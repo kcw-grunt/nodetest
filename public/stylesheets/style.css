@@ -46,6 +46,13 @@ a {
   text-shadow:none;
 }
 
+.label.h3 {
+  color: darkslategray;
+  height: 20px;
+  width: 200px;
+  font: bold 15px arial, sans-serif;
+  text-shadow:none;
+}
 .mainselection {
   overflow:hidden;
   width:20px;
@@ -86,3 +93,16 @@ a {
   font: bold 20px arial, sans-serif;
   text-shadow:none;
 }
+ 
+.column-tnc {
+  float: left;
+  width: 30%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+

@@ -106,15 +106,24 @@ router.post('/', function (req,res) {
 router.post('/sendmessage', function (req,res) {
 	console.log('inside post');
 	var sourceid = req.body.ssids
-	var sourcecallsign = req.body.srccs
-	var destcallsign = req.body.destcs
+	var sourcecallsign = ""+req.body.srccs
+	var destcallsign = ""+req.body.destcs
 	var destssid = req.body.ssidd
-	var messagetext = req.body.message 
+	var messagetext = ""+req.body.message 
+
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" Source SSID = "+sourceid+"\nDest Callsign = "+destcallsign+" Dest SSID = "+destssid);
+	
+	// if (typeof sourceid == 'number' && typeof destssid == 'number' && typeof sourcecallsign == 'string' && typeof destcallsign == 'string' && typeof messagetext == 'string') {
+	// 	sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
+	// } else {
+	// 	//
+	// }
+	//res.render('tnc', {remote_response: 'TEST Message'});
+	res.redirect('back');
+
 	//console.log({source_callsign:sourcecallsign,source_id:sourceid,dest_callsign:destcallsign,dest_ssid:destssid,message_tx:messagetext});
 	// console.log(ms);
 	//res.send('POST for message');
-	sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
 	//res.redirect('/tnc');
   });
 
@@ -132,3 +141,7 @@ router.post('/sendmessage', function (req,res) {
 // });
 
 module.exports = router;
+
+function newFunction() {
+	return 'Express';
+}

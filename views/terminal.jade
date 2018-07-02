@@ -1,10 +1,13 @@
 extends layout
 
 block content
-    h1= title
-    form(name="add-estimation", method="post", action="/term")
-        div.input
-            span.label Title
-            input(type="text", name="ar")
-        div.actions
-            input(type="submit", value="add")
+  head   
+    title Hello
+  body
+    .row
+      .column-tnc column 1
+        .label first stuff
+      | 
+      .column-tnc col 2
+        .label my llal
+      

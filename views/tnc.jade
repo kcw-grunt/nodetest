@@ -1,34 +1,49 @@
 extends layout
 
-block content 
-  body
-  h1.h1main TNC Messaging
+block head
+  title TNC Page
+block content
+  - var remote_response = "--NO RESPONSE--";
+  body 
+  h1.h1main(name=title) TNC Messaging
     br
     br
-    form(method="POST" action="/tnc/sendmessage")
-      div.form-group
-        label.label.h2  Source Callsign: 
-        input.input.main(style="text-transform: uppercase",maxlength="6",type="text", name="srccs", placeholder="KM6TIG")
-        label.label.h2       SSID: 
-        select.select(name="ssids")
-          -for(var i = 1;i<16;i++){
-          option(value="#{i}") #{i}
-          -}
-      br
-      div.form-group
-        label.label.h2  Destination Callsign: 
-        input.input.main(style="text-transform: uppercase",maxlength="6",type="text", name="srccs", placeholder="KM6TIG")
-        label.label.h2       SSID: 
-        select.select(name="ssidd")
-          -for(var i = 1;i<16;i++){
-          option(value="#{i}") #{i}
-          -}
-      br
-      div.form-group
-        label.label.h2  Message: 
-        br
-        br
-        textarea(cols="30", rows="5",name="message")
-      br
-      br
-      button.btn.primary(type="submit") Send
+    .row
+        .column-tnc
+          form(method="POST" action="/tnc/sendmessage")
+            div.form-group
+              label.label.h2  Source Callsign: 
+              input.input.main(style="text-transform: uppercase",maxlength="6",type="text", name="srccs", placeholder="KM6TIG")
+              label.label.h2       SSID: 
+              select.select(name="ssids")
+                -for(var i = 1;i<16;i++){
+                option(value="#{i}") #{i}
+                -}
+            br
+            div.form-group
+              label.label.h2  Destination Callsign: 
+              input.input.main(style="text-transform: uppercase",maxlength="6",type="text", name="srccs", placeholder="KM6TIG")
+              label.label.h2       SSID: 
+              select.select(name="ssidd")
+                -for(var i = 1;i<16;i++){
+                option(value="#{i}") #{i}
+                -}
+            br
+            div.form-group
+              label.label.h2  Message: 
+              br
+              br
+              textarea(cols="30", rows="5",name="message")
+            br
+            br 
+            button.btn.primary(type="submit") Send
+        | 
+        .column-tnc
+          br
+          br
+          br
+          br
+          label.label.h2 Remote Response:
+           br
+           br
+           label.label.h3 #{remote_response}
