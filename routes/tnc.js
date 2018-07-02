@@ -30,6 +30,8 @@ var tnc = new ax25.kissTNC(
 	  baudRate : 9600
     }
 ); 
+
+tnc.enterD72KISS();
  
  
 // var beacon = function() {
@@ -64,7 +66,6 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	console.log('Test message sent');
 }
   
-tnc.enterD72KISS();
 
 //tnc.startCONV('Hello');
  
@@ -111,7 +112,7 @@ router.post('/sendmessage', function (req,res) {
 	var destssid = req.body.ssidd
 	var messagetext = ""+req.body.message 
 
-	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" Source SSID = "+sourceid+"\nDest Callsign = "+destcallsign+" Dest SSID = "+destssid);
+	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" "+sourceid+"\nDest Callsign = "+destcallsign+" "+destssid+"\n");
 	
 	if (typeof sourceid == 'number' && typeof destssid == 'number' && typeof sourcecallsign == 'string' && typeof destcallsign == 'string' && typeof messagetext == 'string') {
 		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
