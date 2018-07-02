@@ -44,9 +44,9 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
 	var ssid_s = parseInt(sssid, 10);
 	var ssid_d = parseInt(dssid, 10);
-	scs = scs.toString();
-	dcs = dcs.toString();
-	message_tx = message_tx.toString();
+	scs= ""+scs;
+	dcs = ""+dcs;
+	message_tx = ""+message_tx;
 
 	console.log('ssds:'+ ssid_s + 'ssdd' + ssid_d);
 	var testpacket = new ax25.Packet(
