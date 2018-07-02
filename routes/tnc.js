@@ -113,13 +113,13 @@ router.post('/sendmessage', function (req,res) {
 
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" Source SSID = "+sourceid+"\nDest Callsign = "+destcallsign+" Dest SSID = "+destssid);
 	
-	// if (typeof sourceid == 'number' && typeof destssid == 'number' && typeof sourcecallsign == 'string' && typeof destcallsign == 'string' && typeof messagetext == 'string') {
-	// 	sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
-	// } else {
-	// 	//
-	// }
+	if (typeof sourceid == 'number' && typeof destssid == 'number' && typeof sourcecallsign == 'string' && typeof destcallsign == 'string' && typeof messagetext == 'string') {
+		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
+	} else {
+		console.log('stm Failed');
+		res.redirect('back');
+	}
 	//res.render('tnc', {remote_response: 'TEST Message'});
-	res.redirect('back');
 
 	//console.log({source_callsign:sourcecallsign,source_id:sourceid,dest_callsign:destcallsign,dest_ssid:destssid,message_tx:messagetext});
 	// console.log(ms);
