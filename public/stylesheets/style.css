@@ -66,14 +66,13 @@ body {
 }
 .select {
   border:0;
-  background:transparent;
+  background:#111111;
   height:24px;
   border:1px solid #0066A2;
   width:30px;
   margin-left:5px;
   text-align: center;
-  font: bold 12px arial, sans-serif;
-  color: #ffffff;
+  font: bold 12px arial, sans-serif; 
 }
 
 .input.main {
