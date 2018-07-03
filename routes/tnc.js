@@ -3,7 +3,7 @@ var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var SerialPort = require('serialport');
 var util = require('util');
-var devicePath = '/dev/ttyUSB0'; 
+var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
 console.log('Selected port: '+ devicePath +'\n');
 
 const parsers = SerialPort.parsers;
@@ -32,8 +32,8 @@ var tnc = new ax25.kissTNC(
 ); 
 
 tnc.enterD72KISS();
- 
- 
+  
+
 // var beacon = function() {
 // 	var frame = testpacket.assemble();
 // 	tnc.send(frame);
@@ -41,6 +41,7 @@ tnc.enterD72KISS();
 // }
 
 function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
+	
 
 	console.log('inside send test message');
 	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
@@ -114,7 +115,7 @@ router.post('/sendmessage', function (req,res) {
 
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" "+sourceid+"\nDest Callsign = "+destcallsign+" "+destssid+"\n");
 	
-	if (typeof sourceid == 'number' && typeof destssid == 'number' && typeof sourcecallsign == 'string' && typeof destcallsign == 'string' && typeof messagetext == 'string') {
+	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
 		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
 	} else {
 		console.log('stm Failed');

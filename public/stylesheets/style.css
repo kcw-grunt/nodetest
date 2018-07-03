@@ -1,10 +1,12 @@
-body {
-
-}
-
 a {
   color: #00B7FF;
 }
+
+body {
+        font-family: Verdana;
+        font-size: 13px;
+        background: #111111;
+    }
 
 .button {
   background-color: #4CAF50; /* Green */
@@ -39,7 +41,7 @@ a {
 }
 
 .label.h2 {
-  color: black;
+  color: white;
   height: 20px;
   width: 60px;
   font: bold 15px arial, sans-serif;
@@ -47,7 +49,7 @@ a {
 }
 
 .label.h3 {
-  color: darkslategray;
+  color: #ffffff;
   height: 20px;
   width: 200px;
   font: bold 15px arial, sans-serif;
@@ -57,17 +59,21 @@ a {
   overflow:hidden;
   width:20px;
   margin-left:35px;
+  font: bold 15px arial, sans-serif;
+  color: #ffffff;
   /* background: url("images/dropdown_arrow.png") no-repeat #fff 319px 2px; */
   /* dropdown_arrow.png is a 31x28 image */
 }
 .select {
   border:0;
   background:transparent;
-  height:20px;
-  border:1px solid #d8d8d8;
+  height:24px;
+  border:1px solid #0066A2;
   width:30px;
   margin-left:5px;
   text-align: center;
+  font: bold 12px arial, sans-serif;
+  color: #ffffff;
 }
 
 .input.main {
@@ -75,11 +81,11 @@ a {
   font: 14px arial, sans-serif;
   background:transparent;
   height:20px;
-  border:1px solid #d8d8d8;
+  border:1px solid #0066A2;
   width:65px;
-  margin-left:5px;
-  margin-left:5px;
+  margin-left:5px; 
   text-align: center;
+  border-radius: 4px;
 }
 
 .textarea{
@@ -89,7 +95,7 @@ a {
 }
 
 .h1main{
-  color: black; 
+  color: white; 
   font: bold 20px arial, sans-serif;
   text-shadow:none;
 }
