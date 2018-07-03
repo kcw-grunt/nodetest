@@ -1,20 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
-var SerialPort = require('serialport');
+const SerialPort = require('serialport');
+const Readline = SerialPort.parsers.Readline;
+const port = new SerialPort('/dev/tty.SLAB_USBtoUART',9600);
+const parser = new Readline();
 var util = require('util');
 var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
 console.log('Selected port: '+ devicePath +'\n');
 
-const parsers = SerialPort.parsers;
-// Use a `\r\n` as a line terminator
-const parser = new parsers.Readline({
-    delimiter: '\r\n'
-  }); 
+var tnc = new ax25.kissTNC(
+    {	serialPort : devicePath,
+	  baudRate : 9600
+    }
+); 
 
-//Set port path regardless of OS
+// tnc.pipe(parser);
+// tnc.on('data', function (data) {
+// 	  console.log('data received: ' + data)
+// 	})
+// tnc.write('ROBOT PLEASE RESPOND\n');
+//   console.log("After Robotcall");  
 
-// const sp = SerialPort(devicePath,9600);
 
 
 // sp.list(function (err, ports) {
@@ -25,11 +32,7 @@ const parser = new parsers.Readline({
 //     });
 // });
   
-var tnc = new ax25.kissTNC(
-    {	serialPort : devicePath,
-	  baudRate : 9600
-    }
-); 
+
 
 tnc.enterD72KISS();
   
