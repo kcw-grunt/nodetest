@@ -6,12 +6,18 @@ const SerialPort = require('serialport');
 //const port = new SerialPort('/dev/ttyUSB0',9600);
 //const parser = new Readline();
 var util = require('util');
-var devicePath = '/dev/ttyUSB0';//'/dev/ttyUSB0'; 
+var devicePath = '/dev/ttyUSB0'; 
+var currentPacket = new ax25.Packet();
 console.log('Selected port: '+ devicePath +'\n');
 
 var tnc = new ax25.kissTNC(
     {	serialPort : devicePath,
-	  baudRate : 9600
+	  baudRate : 9600,
+	  txDelay		: 30,
+		persistence	: 63,
+		slotTime		: 10,
+		txTail		: 1,
+		fullDuplex	: false
     }
 ); 
 
@@ -73,6 +79,7 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 			'infoString' : message_tx
 		}
 	);
+    currentPacket = testpacket;
 	//console.log(testpacket);
 	var frame = testpacket.assemble();
 	tnc.send(frame);
