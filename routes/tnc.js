@@ -20,6 +20,26 @@ var tnc = new ax25.kissTNC(
     }
 ); 
 
+var beacon = function(scs,sssid,dcs,dssid,message_tx) {
+	var ssid_s = parseInt(sssid, 10);
+	var ssid_d = parseInt(dssid, 10);
+	scs= ""+scs;
+	dcs = ""+dcs;
+	message_tx = ""+message_tx;
+	var packet = new ax25.Packet(
+		{	'sourceCallsign' : scs,
+			'sourceSSID' : ssid_s,
+			'destinationCallsign' : dcs,
+			'destinationSSID' : ssid_d,
+			'type' : ax25.Defs.U_FRAME_UI,
+			'infoString' : message_tx
+		}
+	);
+	var frame = packet.assemble();
+	tnc.send(frame);
+	console.log("Beacon sent.");
+}
+
 // tnc.pipe(parser);
 // tnc.on('data', function (data) {
 // 	  console.log('data received: ' + data)
@@ -132,10 +152,11 @@ router.post('/sendmessage', function (req,res) {
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" "+sourceid+"\nDest Callsign = "+destcallsign+" "+destssid+"\n");
 	
 	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
-		console.log('STM Beacon');	
+		console.log(' Beacon');	
 		
+		setInterval(beacon,40000);
 
-		setInterval(sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext),40000);
+		//setInterval(sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext),40000);
 	} else {
 		console.log('stm Failed');
 		res.redirect('back');
