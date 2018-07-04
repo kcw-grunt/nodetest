@@ -3,11 +3,27 @@ extends layout
 block content
   head   
     title Hello
+    script.
+      var callConv = function() {
+        console.log('Call Conv')
+      }
   body
     .row
-      .column-tnc column 1
-        .label first stuff
+      .column-test column 1
+        .label.h3 Command #1:
+        br
+        br
+        .btn.h3(onclick='callConv()') CONV
       | 
-      .column-tnc col 2
-        .label my llal
+      .column-test col 2
+        .label.h3 Command #2:
+        br
+        br
+        .btn.h3() C KM6TIG-1
+      | 
+      .column-test col 3
+        .label.h3 my llal
+      | 
+      .column-test col 4
+        .label.h3 my llal
       

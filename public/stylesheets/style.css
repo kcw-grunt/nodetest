@@ -40,6 +40,17 @@ body {
   text-shadow:none;
 }
 
+.btn.h3 {
+  background: rgb(0, 162, 67);
+  color: white;
+  border-style: outset;
+  border-color: rgb(0, 162, 67);
+  height: 20px;
+  width: 100px;
+  font: bold 15px arial, sans-serif;
+  text-shadow:none;
+}
+
 .label.h2 {
   color: white;
   height: 20px;
@@ -50,8 +61,8 @@ body {
 
 .label.h3 {
   color: #ffffff;
-  height: 20px;
-  width: 200px;
+  height: 15px;
+  width: 100px;
   font: bold 15px arial, sans-serif;
   text-shadow:none;
 }
@@ -102,6 +113,11 @@ body {
 .column-tnc {
   float: left;
   width: 40%;
+}
+
+.column-test {
+  float: left;
+  width: 20%;
 }
 
 /* Clear floats after the columns */

@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 const SerialPort = require('serialport');
-const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/tty.SLAB_USBtoUART',9600);
-const parser = new Readline();
+//const Readline = SerialPort.parsers.Readline;
+//const port = new SerialPort('/dev/ttyUSB0',9600);
+//const parser = new Readline();
 var util = require('util');
-var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
+var devicePath = '/dev/ttyUSB0';//'/dev/ttyUSB0'; 
 console.log('Selected port: '+ devicePath +'\n');
 
 var tnc = new ax25.kissTNC(
@@ -34,7 +34,7 @@ var tnc = new ax25.kissTNC(
   
 
 
-tnc.enterD72KISS();
+//tnc.enterD72KISS();
   
 
 // var beacon = function() {
