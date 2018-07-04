@@ -12,7 +12,7 @@ console.log('Selected port: '+ devicePath +'\n');
 
 var tnc = new ax25.kissTNC(
     {	serialPort : devicePath,
-	  baudRate : 9600,
+	  baudRate : 1200,
 	  txDelay		: 30,
 		persistence	: 63,
 		slotTime		: 10,
