@@ -40,7 +40,6 @@ var tnc = new ax25.kissTNC(
   
 
 
-//tnc.enterD72KISS();
   
 
 // var beacon = function() {
@@ -86,6 +85,8 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	console.log('Test message sent');
 }
   
+tnc.enterD72KISS();
+
 
 //tnc.startCONV('Hello');
  
@@ -135,7 +136,10 @@ router.post('/sendmessage', function (req,res) {
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" "+sourceid+"\nDest Callsign = "+destcallsign+" "+destssid+"\n");
 	
 	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
-		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
+		console.log('STM Beacon');	
+		
+
+		setInterval(sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext),40000);
 	} else {
 		console.log('stm Failed');
 		res.redirect('back');
