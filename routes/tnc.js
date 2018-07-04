@@ -11,13 +11,12 @@ var currentPacket = new ax25.Packet();
 console.log('Selected port: '+ devicePath +'\n');
 
 var tnc = new ax25.kissTNC(
-    {	serialPort : devicePath,
-	  baudRate : 9600,
-	  txDelay		: 30,
-		persistence	: 63,
-		slotTime		: 10,
-		txTail		: 1,
-		fullDuplex	: false
+    {		serialPort : devicePath,
+	  		baudRate : 9600,
+	  		txDelay	 : 30,
+			persistence	: 63,
+			slotTime		: 10,
+			fullDuplex: false
     }
 ); 
 
