@@ -12,7 +12,7 @@ console.log('Selected port: '+ devicePath +'\n');
 
 var tnc = new ax25.kissTNC(
     {	serialPort : devicePath,
-	  baudRate : 1200,
+	  baudRate : 9600,
 	  txDelay		: 30,
 		persistence	: 63,
 		slotTime		: 10,
@@ -84,9 +84,7 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	tnc.send(frame);
 	console.log('Test message sent');
 }
-   
-this.sendRAWPacket('DISP');
-
+     
 //tnc.startCONV('Hello');
  
 tnc.on(
