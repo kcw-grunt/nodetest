@@ -84,9 +84,8 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	tnc.send(frame);
 	console.log('Test message sent');
 }
-  
-tnc.enterD72KISS();
-
+   
+this.sendRAWPacket('DISP');
 
 //tnc.startCONV('Hello');
  
