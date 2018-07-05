@@ -8,9 +8,9 @@ var osvar = process.platform;
 console.log(osvar);
 if (osvar == 'darwin') {
 	console.log("you are on a mac os");
-	devicePath = '/dev/ttyUSB0';
-}else{
     devicePath = '/dev/tty.SLAB_USBtoUART';
+}else{ 
+	devicePath = '/dev/ttyUSB0';
 }
 
 
@@ -35,11 +35,7 @@ var retryCounter = 2;
 // });
 var tnc = new ax25.kissTNC(
 	{		serialPort : devicePath,
-			baudRate : 9600,
-			txDelay	 : 30,
-			persistence	: 63,
-			slotTime		: 10,
-			fullDuplex: false
+			baudRate : 9600
 	}); 
 
 //  var tnc = new ax25.kissTNC(
