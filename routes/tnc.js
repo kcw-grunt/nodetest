@@ -120,9 +120,9 @@ router.post('/sendmessage', function (req,res) {
 	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" "+sourceid+"\nDest Callsign = "+destcallsign+" "+destssid+"\n");
 	
 	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
-		
 		console.log(' Beacon Ping');	
-		updateLogText('Beacoon Ping'); 
+		updateLogText('Beacoon Ping');
+		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
 	} else {
 		console.log('STM Failed');
 		updateLogText('STM Failed');
