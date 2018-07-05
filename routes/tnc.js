@@ -1,23 +1,39 @@
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
-var SerialPort = require('serialport'); 
+var SerialPort = require('serialport');  
 var util = require('util');
 
 var devicePath = '/dev/ttyUSB0'; 
 var radiodata ="--NO RESPONSE--";
-var messageContent = "";
-var currentPacket = new ax25.Packet();
+var messageContent = ""; 
 
+SerialPort.list(function (err, ports) {
+		ports.forEach(function(port) {
+		console.log(port.comName);
+		//console.log(port.pnpId);
+		//console.log(port.manufacturer);
+			if (port.comName == '/dev/tty.SLAB_USBtoUART' || port.comName == '/dev/ttyUSB0') {
+				devicePath = port.comName;
+				console.log("in list"+Date.now()); 
+			} 
+		});
+	console.log('Chosing port:' + devicePath);
+});
+
+ 
 var tnc = new ax25.kissTNC(
-    {		serialPort : devicePath,
-	  		baudRate : 9600,
-	  		txDelay	 : 30,
+	{		serialPort : devicePath,
+			baudRate : 9600,
+			txDelay	 : 30,
 			persistence	: 63,
 			slotTime		: 10,
 			fullDuplex: false
-    }
-); 
+	}); 
+
+console.log("after tnc"+Date.now());
+
+
 
 console.log('Selected port: '+ devicePath +'\n');
 
