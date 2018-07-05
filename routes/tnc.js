@@ -22,19 +22,29 @@ SerialPort.list(function (err, ports) {
 });
 
  
-var tnc = new ax25.kissTNC(
-	{		serialPort : devicePath,
-			baudRate : 9600,
-			txDelay	 : 30,
-			persistence	: 63,
-			slotTime		: 10,
-			fullDuplex: false
-	}); 
+ var tnc = new ax25.kissTNC(
+		{		serialPort : devicePath,
+				baudRate : 9600,
+				txDelay	 : 30,
+				persistence	: 63,
+				slotTime		: 10,
+				fullDuplex: false
+		}); 
+
+process.on('unhandledRejection', (reason, promise) => {
+	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
+	var tempTNC = new ax25.kissTNC(		
+		{		serialPort : devicePath,
+				baudRate : 9600,
+				txDelay	 : 30,
+				persistence	: 63,
+				slotTime		: 10,
+				fullDuplex: false
+		}); 
+	tnc = tempTNC;
+})
 
 console.log("after tnc"+Date.now());
-
-
-
 console.log('Selected port: '+ devicePath +'\n');
 
 var beacon = function(scs,sssid,dcs,dssid,message_tx) {
