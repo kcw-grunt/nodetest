@@ -1,9 +1,8 @@
 extends layout
 
 block content
-  - var remote_response = "--NO RESPONSE--";
   body 
-  h1.h1main(name=title) TNC Messaging
+  h1.h1main #{title}
     br
     br
     .row
@@ -44,4 +43,4 @@ block content
           label.label.h2 Remote Response:
            br
            br
-           label.label.h3 !{remote_response}
+           label.label.h3 #{remote_response}

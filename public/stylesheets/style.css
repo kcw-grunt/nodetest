@@ -60,10 +60,10 @@ body {
 }
 
 .label.h3 {
-  color: #ffffff;
-  height: 15px;
+  color: #999999;
+  height: 60px;
   width: 100px;
-  font: bold 15px arial, sans-serif;
+  font: 12px arial, sans-serif;
   text-shadow:none;
 }
 .mainselection {

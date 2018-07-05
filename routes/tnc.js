@@ -9,7 +9,8 @@ var util = require('util');
 var devicePath = '/dev/ttyUSB0'; 
 var currentPacket = new ax25.Packet();
 console.log('Selected port: '+ devicePath +'\n');
-
+var radiodata ="--NO RESPONSE--";
+var ct = 1;
 var tnc = new ax25.kissTNC(
     {		serialPort : devicePath,
 	  		baudRate : 9600,
@@ -102,6 +103,7 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	var frame = testpacket.assemble();
 	tnc.send(frame);
 	console.log('Test message sent');
+	radiodata = 'Test message sent'; 
 }
      
 //tnc.startCONV('Hello');
@@ -110,7 +112,9 @@ tnc.on(
 	"opened",
 	function() {
 		console.log("TNC opened on " + tnc.serialPort + " at " + tnc.baudRate);
+		radiodata = "TNC opened on " + tnc.serialPort + " at " + tnc.baudRate;
 		//setInterval(beacon, 20000);
+		
 	}
 );
 
@@ -133,9 +137,10 @@ tnc.on(
 );
  
 
-router.get('/', function (req,res) {  
-	console.log('Remote response change');
-	res.render('tnc',{remote_response:'remote_response'}); 
+router.get('/', function (req,res) {    
+	res.render('tnc', { title: 'TNC Messaging', remote_response:radiodata+"\n"+Date.now()}); //, remote_response:ct 
+	//res.render('index', { title: 'Onda Terminal Node' });
+
 });
  
 router.post('/', function (req,res) {
@@ -158,7 +163,7 @@ router.post('/sendmessage', function (req,res) {
 		
 		res.redirect('/tnc');
 
-		setInterval(beacon,40000);
+		//setInterval(beacon,40000);
 
 		//setInterval(sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext),40000);
 	} else {
