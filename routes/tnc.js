@@ -46,7 +46,8 @@ function updateLogText(str) {
 	//.res.render('tnc', {remote_response:radiodata+"\n"+Date.now()}); //, remote_response:ct 
 }
 
-function sendTestMessage(scs,sssid,dcs,dssid,message_tx) { 
+
+function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) { 
 	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
 	var ssid_s = parseInt(sssid, 10);
 	var ssid_d = parseInt(dssid, 10);
@@ -70,7 +71,10 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx) {
 	tnc.send(frame);
 	console.log('Test message sent');
 	radiodata = 'Test message sent'; 
+	callback();
 }
+
+sendTestMessage()
       
 tnc.on(
 	"opened",
@@ -122,11 +126,13 @@ router.post('/sendmessage', function (req,res) {
 	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
 		console.log(' Beacon Ping');	
 		updateLogText('Beacoon Ping');
-		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext);
+		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext, function() {
+			res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
+		});
 	} else {
 		console.log('STM Failed');
 		updateLogText('STM Failed');
-	 } 
+	} 
 	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
   });
 
