@@ -3,13 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const bodyparser = require('body-parser');
-console.log('In app js');
+const bodyparser = require('body-parser'); 
 var indexRouter = require('./routes/index');
 var tncRouter   = require('./routes/tnc');
 var terminalRouter   = require('./routes/terminal');
-
-
+ 
 var app = express();
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());

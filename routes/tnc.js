@@ -4,6 +4,16 @@ var ax25 = require('th-d72-ax25');
 var util = require('util');
 
 var devicePath = '/dev/ttyUSB0';//'/dev/ttyUSB0'; 
+var osvar = process.platform;
+console.log(osvar);
+if (osvar == 'darwin') {
+	console.log("you are on a mac os");
+	devicePath = '/dev/ttyUSB0';
+}else{
+    devicePath = '/dev/tty.SLAB_USBtoUART';
+}
+
+
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
 var retryCounter = 2; 
