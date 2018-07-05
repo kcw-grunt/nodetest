@@ -72,9 +72,7 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) {
 	console.log('Test message sent');
 	radiodata = 'Test message sent'; 
 	callback();
-}
-
-sendTestMessage()
+} 
       
 tnc.on(
 	"opened",
