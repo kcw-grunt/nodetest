@@ -6,23 +6,25 @@ var util = require('util');
 
 var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
 var radiodata ="--NO RESPONSE--";
-var messageContent = ""; 
-var retryCounter = 1;
+var messageContent = "";  
 
-SerialPort.list(function (err, ports) {
-		ports.forEach(function(port) {
-		console.log(port.comName);
-		//console.log(port.pnpId);
-		//console.log(port.manufacturer);
-			if (port.comName == '/dev/tty.SLAB_USBtoUART' || port.comName == '/dev/ttyUSB0') {
-				devicePath = port.comName;
-				console.log("in list"+Date.now()); 
-			} 
-		});
-	console.log('Chosing port:' + devicePath);
-});
 
+//  Problem is calling this function locks the serial port making it impossible to access
+// SerialPort.list(function (err, ports) {
+// 		ports.forEach(function(port) {
+// 		console.log(port.comName);
+// 		//console.log(port.pnpId);
+// 		//console.log(port.manufacturer);
+// 			if (port.comName == '/dev/tty.SLAB_USBtoUART' || port.comName == '/dev/ttyUSB0') {
+// 				devicePath = port.comName;
+// 				port.close();
+// 				console.log("in list"+Date.now()); 
+// 			} 
+// 		});
+// 	console.log('Chosing port:' + devicePath);
+// });
  
+
  var tnc = new ax25.kissTNC(
 		{		serialPort : devicePath,
 				baudRate : 9600,
@@ -34,6 +36,12 @@ SerialPort.list(function (err, ports) {
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
+	if (devicePath == '/dev/tty.SLAB_USBtoUART') {
+		devicePath = '/dev/ttyUSB0';
+	} else {
+		devicePath = '/dev/tty.SLAB_USBtoUART';
+	}
+
 	var tempTNC = new ax25.kissTNC(		
 		{		serialPort : devicePath,
 				baudRate : 9600,
@@ -42,13 +50,7 @@ process.on('unhandledRejection', (reason, promise) => {
 				slotTime		: 10,
 				fullDuplex: false
 		}); 
-	tnc = tempTNC;
-	retryCounter--;
-	if (retryCounter == 0) {
-		console.log('FAILED TO CONNECT to HT');
-		radiodata = 'FAILED TO CONNECT to HT'; 
-	}
-
+	tnc = tempTNC; 
 })
 
 console.log("after tnc"+Date.now());
