@@ -3,7 +3,7 @@ var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var util = require('util');
 
-var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
+var devicePath = '/dev/ttyUSB0';//'/dev/ttyUSB0'; 
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
 var retryCounter = 2; 
@@ -23,7 +23,14 @@ var retryCounter = 2;
 // 		});
 // 	console.log('Chosing port:' + devicePath);
 // });
-var tnc; 
+var tnc = new ax25.kissTNC(
+	{		serialPort : devicePath,
+			baudRate : 9600,
+			txDelay	 : 30,
+			persistence	: 63,
+			slotTime		: 10,
+			fullDuplex: false
+	}); 
 
 //  var tnc = new ax25.kissTNC(
 // 		{		serialPort : devicePath,
@@ -33,21 +40,7 @@ var tnc;
 // 				slotTime		: 10,
 // 				fullDuplex: false
 // 		}); 
-
-function callback() {
-	alert(tnc);
-}
-setTimeout(function() {
-	tnc = new ax25.kissTNC(
-		{		serialPort : devicePath,
-				baudRate : 9600,
-				txDelay	 : 30,
-				persistence	: 63,
-				slotTime		: 10,
-				fullDuplex: false
-		}); 
-	callback();
-}, 0);
+ 
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
@@ -57,15 +50,14 @@ process.on('unhandledRejection', (reason, promise) => {
 		devicePath = '/dev/tty.SLAB_USBtoUART';
 	}
 
-	// var tempTNC = new ax25.kissTNC(		
-	// 	{		serialPort : devicePath,
-	// 			baudRate : 9600,
-	// 			txDelay	 : 30,
-	// 			persistence	: 63,
-	// 			slotTime		: 10,
-	// 			fullDuplex: false
-	// 	}); 
-	// tnc = tempTNC; 
+	tnc = new ax25.kissTNC(
+		{		serialPort : devicePath,
+				baudRate : 9600,
+				txDelay	 : 30,
+				persistence	: 63,
+				slotTime		: 10,
+				fullDuplex: false
+		}); 
 })
 
 console.log("after tnc"+Date.now());
