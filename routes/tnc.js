@@ -133,8 +133,9 @@ tnc.on(
 );
  
 
-router.get('/', function (req,res) { 
-	res.render('tnc', { title: 'TNC Page' });
+router.get('/', function (req,res) {  
+	console.log('Remote response change');
+	res.render('tnc',{remote_response:'remote_response'}); 
 });
  
 router.post('/', function (req,res) {
@@ -153,16 +154,16 @@ router.post('/sendmessage', function (req,res) {
 	
 	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
 		
-		remote_response = console.log(' Beacon');	
-		res.send({title:remote_response});
+		console.log(' Beacon');	
 		
+		res.redirect('/tnc');
+
 		setInterval(beacon,40000);
 
 		//setInterval(sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext),40000);
 	} else {
 		console.log('stm Failed');
-		res.redirect('back');
-	}
+ 	}
 	//res.render('tnc', {remote_response: 'TEST Message'});
 
 	//console.log({source_callsign:sourcecallsign,source_id:sourceid,dest_callsign:destcallsign,dest_ssid:destssid,message_tx:messagetext});
