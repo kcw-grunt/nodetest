@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var util = require('util');
-
-var devicePath = '/dev/ttyUSB0';//'/dev/ttyUSB0'; 
+var devicePath = '/dev/ttyUSB0';
 var osvar = process.platform;
 console.log(osvar);
 if (osvar == 'darwin') {
@@ -15,7 +14,6 @@ if (osvar == 'darwin') {
 
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
-var retryCounter = 2; 
 
 var tnc = new ax25.kissTNC(
 	{		serialPort : devicePath,
@@ -27,26 +25,9 @@ tnc.enterD72KISS();
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
-	// if (devicePath == '/dev/tty.SLAB_USBtoUART') {
-	// 	devicePath = '/dev/ttyUSB0';
-	// } else {
-	// 	devicePath = '/dev/tty.SLAB_USBtoUART';
-	// }
-
-	// tnc = new ax25.kissTNC(
-	// 	{		serialPort : devicePath,
-	// 			baudRate : 9600,
-	// 			txDelay	 : 30,
-	// 			persistence	: 63,
-	// 			slotTime		: 10,
-	// 			fullDuplex: false
-	// 	}); 
 })
 
-console.log("after tnc"+Date.now());
 console.log('Selected port: '+ devicePath +'\n');
-
-
 
 var beacon = function(scs,sssid,dcs,dssid,message_tx) {
 	var ssid_s = parseInt(sssid, 10);
@@ -83,7 +64,6 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) {
 	message_tx = ""+message_tx;
 	messageContent = message_tx;
 
-	console.log('ssds:'+ ssid_s + 'ssdd' + ssid_d);
 	var testpacket = new ax25.Packet(
 		{	'sourceCallsign' : scs,
 			'sourceSSID' : ssid_s,
@@ -112,6 +92,22 @@ tnc.on(
 );
 
 tnc.on(
+	"closed",
+	function() {
+		console.log("TNC closed on " + tnc.serialPort ); 
+		updateLogText("TNC closed on " + tnc.serialPort ); 
+	}
+);
+
+tnc.on(
+	"written to port",
+	function() {
+		console.log(tnc.serialPort + "TNC written to " ); 
+		updateLogText(tnc.serialPort + "TNC written to " );  
+	}
+);
+
+tnc.on(
 	"frame",
 	function(frame) {
 		var packet = new ax25.Packet({ 'frame' : frame });
@@ -129,8 +125,15 @@ tnc.on(
 			radiodata = packet.infoString;
 	}
 );
- 
 
+tnc.on(
+	"sent",
+	function() {
+		console.log(tnc.serialPort + "TNC sent " ); 
+		updateLogText(tnc.serialPort + "TNC sent " );  
+	}
+);
+ 
 router.get('/', function (req,res) {    
 	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
 });
@@ -140,20 +143,16 @@ router.post('/', function (req,res) {
 });
 
 router.post('/sendmessage', function (req,res) {
-	console.log('inside post');
 	var sourceid = req.body.ssids
 	var sourcecallsign = ""+req.body.srccs
 	var destcallsign = ""+req.body.destcs
 	var destssid = req.body.ssidd
 	var messagetext = ""+req.body.message
 
-	console.log("Message = "+messagetext+"\nSource Callsign = "+sourcecallsign+" "+sourceid+"\nDest Callsign = "+destcallsign+" "+destssid+"\n");
-	
 	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
-		console.log(' Beacon Ping');	
+		console.log('Beacon Ping');	
 		updateLogText('Beacoon Ping');
 		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext, function() {
-			console.log('Inside callback');
 			res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
 		});
 	} else {
