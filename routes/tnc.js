@@ -4,10 +4,10 @@ var ax25 = require('th-d72-ax25');
 var SerialPort = require('serialport');  
 var util = require('util');
 
-var devicePath = '/dev/ttyUSB0'; 
+var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
-var retryCounter = 4;
+var retryCounter = 1;
 
 SerialPort.list(function (err, ports) {
 		ports.forEach(function(port) {
@@ -47,7 +47,6 @@ process.on('unhandledRejection', (reason, promise) => {
 	if (retryCounter == 0) {
 		console.log('FAILED TO CONNECT to HT');
 		radiodata = 'FAILED TO CONNECT to HT'; 
-		exit(-1);
 	}
 
 })
