@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
-var SerialPort = require('serialport');  
 var util = require('util');
 
 var devicePath = '/dev/tty.SLAB_USBtoUART';//'/dev/ttyUSB0'; 
 var radiodata ="--NO RESPONSE--";
-var messageContent = "";  
+var messageContent = ""; 
+var retryCounter = 2; 
 
 
 //  Problem is calling this function locks the serial port making it impossible to access
@@ -23,9 +23,22 @@ var messageContent = "";
 // 		});
 // 	console.log('Chosing port:' + devicePath);
 // });
- 
+var tnc; 
 
- var tnc = new ax25.kissTNC(
+//  var tnc = new ax25.kissTNC(
+// 		{		serialPort : devicePath,
+// 				baudRate : 9600,
+// 				txDelay	 : 30,
+// 				persistence	: 63,
+// 				slotTime		: 10,
+// 				fullDuplex: false
+// 		}); 
+
+function callback() {
+	alert(tnc);
+}
+setTimeout(function() {
+	tnc = new ax25.kissTNC(
 		{		serialPort : devicePath,
 				baudRate : 9600,
 				txDelay	 : 30,
@@ -33,6 +46,8 @@ var messageContent = "";
 				slotTime		: 10,
 				fullDuplex: false
 		}); 
+	callback();
+}, 0);
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
@@ -42,15 +57,15 @@ process.on('unhandledRejection', (reason, promise) => {
 		devicePath = '/dev/tty.SLAB_USBtoUART';
 	}
 
-	var tempTNC = new ax25.kissTNC(		
-		{		serialPort : devicePath,
-				baudRate : 9600,
-				txDelay	 : 30,
-				persistence	: 63,
-				slotTime		: 10,
-				fullDuplex: false
-		}); 
-	tnc = tempTNC; 
+	// var tempTNC = new ax25.kissTNC(		
+	// 	{		serialPort : devicePath,
+	// 			baudRate : 9600,
+	// 			txDelay	 : 30,
+	// 			persistence	: 63,
+	// 			slotTime		: 10,
+	// 			fullDuplex: false
+	// 	}); 
+	// tnc = tempTNC; 
 })
 
 console.log("after tnc"+Date.now());
