@@ -7,46 +7,22 @@ var devicePath = '/dev/ttyUSB0';//'/dev/ttyUSB0';
 var osvar = process.platform;
 console.log(osvar);
 if (osvar == 'darwin') {
-	console.log("you are on a mac os");
+	console.log("Using Mac OS");
     devicePath = '/dev/tty.SLAB_USBtoUART';
 }else{ 
 	devicePath = '/dev/ttyUSB0';
 }
 
-
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
 var retryCounter = 2; 
 
-
-//  Problem is calling this function locks the serial port making it impossible to access
-// SerialPort.list(function (err, ports) {
-// 		ports.forEach(function(port) {
-// 		console.log(port.comName);
-// 		//console.log(port.pnpId);
-// 		//console.log(port.manufacturer);
-// 			if (port.comName == '/dev/tty.SLAB_USBtoUART' || port.comName == '/dev/ttyUSB0') {
-// 				devicePath = port.comName;
-// 				port.close();
-// 				console.log("in list"+Date.now()); 
-// 			} 
-// 		});
-// 	console.log('Chosing port:' + devicePath);
-// });
 var tnc = new ax25.kissTNC(
 	{		serialPort : devicePath,
 			baudRate : 9600
 	}); 
 
-//  var tnc = new ax25.kissTNC(
-// 		{		serialPort : devicePath,
-// 				baudRate : 9600,
-// 				txDelay	 : 30,
-// 				persistence	: 63,
-// 				slotTime		: 10,
-// 				fullDuplex: false
-// 		}); 
- 
+tnc.sendRAWPacket('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
@@ -124,10 +100,7 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) {
 	callback();
 }  
  
-if (typeof tnc !== 'undefined') {
-	tnc.sendRAWPacket('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
-}
-
+ 
 tnc.on(
 	"opened",
 	function() {
