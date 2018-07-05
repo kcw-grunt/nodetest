@@ -22,7 +22,8 @@ var tnc = new ax25.kissTNC(
 			baudRate : 9600
 	}); 
 
-tnc.sendRAWPacket('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
+tnc.enterD72KISS();
+//('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
