@@ -125,13 +125,14 @@ router.post('/sendmessage', function (req,res) {
 		console.log(' Beacon Ping');	
 		updateLogText('Beacoon Ping');
 		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext, function() {
+			console.log('Inside callback');
 			res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
 		});
 	} else {
 		console.log('STM Failed');
 		updateLogText('STM Failed');
+		res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
 	} 
-	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
   });
 
 module.exports = router;
