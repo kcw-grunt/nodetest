@@ -7,6 +7,7 @@ var util = require('util');
 var devicePath = '/dev/ttyUSB0'; 
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
+var retryCounter = 4;
 
 SerialPort.list(function (err, ports) {
 		ports.forEach(function(port) {
@@ -42,10 +43,19 @@ process.on('unhandledRejection', (reason, promise) => {
 				fullDuplex: false
 		}); 
 	tnc = tempTNC;
+	retryCounter--;
+	if (retryCounter == 0) {
+		console.log('FAILED TO CONNECT to HT');
+		radiodata = 'FAILED TO CONNECT to HT'; 
+		exit(-1);
+	}
+
 })
 
 console.log("after tnc"+Date.now());
 console.log('Selected port: '+ devicePath +'\n');
+
+
 
 var beacon = function(scs,sssid,dcs,dssid,message_tx) {
 	var ssid_s = parseInt(sssid, 10);
@@ -98,8 +108,12 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) {
 	console.log('Test message sent');
 	radiodata = 'Test message sent'; 
 	callback();
-} 
-      
+}  
+ 
+if (typeof tnc !== 'undefined') {
+	tnc.sendRAWPacket('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
+}
+
 tnc.on(
 	"opened",
 	function() {
