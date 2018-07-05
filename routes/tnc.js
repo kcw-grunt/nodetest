@@ -44,20 +44,20 @@ var tnc = new ax25.kissTNC(
 
 process.on('unhandledRejection', (reason, promise) => {
 	console.log('PROCESS : Unhandled Rejection at:', reason.stack || reason)
-	if (devicePath == '/dev/tty.SLAB_USBtoUART') {
-		devicePath = '/dev/ttyUSB0';
-	} else {
-		devicePath = '/dev/tty.SLAB_USBtoUART';
-	}
+	// if (devicePath == '/dev/tty.SLAB_USBtoUART') {
+	// 	devicePath = '/dev/ttyUSB0';
+	// } else {
+	// 	devicePath = '/dev/tty.SLAB_USBtoUART';
+	// }
 
-	tnc = new ax25.kissTNC(
-		{		serialPort : devicePath,
-				baudRate : 9600,
-				txDelay	 : 30,
-				persistence	: 63,
-				slotTime		: 10,
-				fullDuplex: false
-		}); 
+	// tnc = new ax25.kissTNC(
+	// 	{		serialPort : devicePath,
+	// 			baudRate : 9600,
+	// 			txDelay	 : 30,
+	// 			persistence	: 63,
+	// 			slotTime		: 10,
+	// 			fullDuplex: false
+	// 	}); 
 })
 
 console.log("after tnc"+Date.now());

@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyparser = require('body-parser');
-
+console.log('In app js');
 var indexRouter = require('./routes/index');
 var tncRouter   = require('./routes/tnc');
 var terminalRouter   = require('./routes/terminal');
