@@ -162,5 +162,12 @@ router.post('/sendmessage', function (req,res) {
 	} 
   });
 
+  router.post('/cmd', function (req,res) {
+	  var cmd = req.body.d72cmd;
+	  console.log('in cmd'+cmd);
+	tnc.sendRAWPacket(''+cmd);
+//('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
+  });
+
 module.exports = router;
  
