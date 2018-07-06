@@ -30,23 +30,21 @@ block content
               label.label.h2  Message: 
               br
               br
-              textarea(cols="30", rows="5",name="message")
+              textarea(cols="20", rows="3",name="message")
             br
             button.btn.primary(type="submit") Send
         | 
         .column-tnc
           form(method="POST" action="/tnc/cmd")
             div.form-group
-            label.label.h2 CMD>D72A:
+              label.label.h2 CMD -> D72A:
+              input.input.m2(style="text-transform: uppercase",type="text", name="d72cmd") 
+              br
+              br
+              button.green-button(type="submit") Command
             div.form-group
-            input.input.m2(style="text-transform: uppercase",type="text", name="d72cmd") 
             br
-            br
-            button.green-button(type="submit") Command
-            div.form-group
-            br
-            label.label.h3 #{cmd_response}
-          br 
-          label.label.h2 Remote Response:
+            label.label.h3 #{cmd_response} 
+          label.label.h2 Message Response:
           br
           label.label.h3 #{remote_response}
