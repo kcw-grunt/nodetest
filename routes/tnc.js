@@ -28,27 +28,7 @@ process.on('unhandledRejection', (reason, promise) => {
 })
 
 console.log('Selected port: '+ devicePath +'\n');
-
-var beacon = function(scs,sssid,dcs,dssid,message_tx) {
-	var ssid_s = parseInt(sssid, 10);
-	var ssid_d = parseInt(dssid, 10);
-	scs= ""+scs;
-	dcs = ""+dcs;
-	message_tx = ""+message_tx;
-	var packet = new ax25.Packet(
-		{	'sourceCallsign' : scs,
-			'sourceSSID' : ssid_s,
-			'destinationCallsign' : dcs,
-			'destinationSSID' : ssid_d,
-			'type' : ax25.Defs.U_FRAME_UI,
-			'infoString' : message_tx
-		}
-	);
-	var frame = packet.assemble();
-	tnc.send(frame);
-	console.log("Beacon sent.");
-}
-
+ 
 function updateLogText(str) {
 	radiodata = str; 
 	//.res.render('tnc', {remote_response:radiodata+"\n"+Date.now()}); //, remote_response:ct 
@@ -76,8 +56,8 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) {
     currentPacket = testpacket; 
 	var frame = testpacket.assemble();
 	tnc.send(frame);
-	console.log('Test message sent');
-	radiodata = 'Test message sent'; 
+	console.log('Test message sent:'+ frame);
+	radiodata = 'Test message sent' + frame; 
 	callback();
 }  
  
