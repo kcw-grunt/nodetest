@@ -81,7 +81,6 @@ function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) {
 	callback();
 }  
  
- 
 tnc.on(
 	"opened",
 	function() {
@@ -164,7 +163,7 @@ router.post('/sendmessage', function (req,res) {
 
   router.post('/cmd', function (req,res) {
 	  var cmd = req.body.d72cmd;
-	  console.log('in cmd'+cmd);
+	  console.log('in cmd: '+cmd);
 	tnc.sendRAWPacket(''+cmd);
 //('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
   });
