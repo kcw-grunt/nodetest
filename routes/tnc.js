@@ -112,6 +112,8 @@ tnc.on(
 		updateLogText(tnc.serialPort + "TNC sent " );  
 	}
 );
+
+//tnc.parser.on('data', console.log);
  
 router.get('/', function (req,res) {    
 	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
