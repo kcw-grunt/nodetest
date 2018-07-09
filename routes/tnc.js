@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var util = require('util');
+var SerialPort = require('seriaport');
+var Readline = SerialPort.parsers.Readline;
+var parser = new Readline();
 var devicePath = '/dev/ttyUSB0';
 var osvar = process.platform;
 console.log(osvar);
@@ -19,7 +22,7 @@ var tnc = new ax25.kissTNC(
 	{		serialPort : devicePath,
 			baudRate : 9600
 	}); 
-
+tnc.serialHandle.pipe(parser);
 tnc.enterD72KISS();
 //('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
 
@@ -113,6 +116,14 @@ tnc.on(
 	}
 );
 
+// myPort.on('open', showPortOpen);    // called when the serial port opens
+// myPort.on('close', showPortClose);  // called when the serial port closes
+// myPort.on('error', showError);   // called when there's an error with the serial port
+parser.on('data', readSerialData); 
+
+function readSerialData(data) {
+	console.log(data);
+  }
 //tnc.parser.on('data', console.log);
  
 router.get('/', function (req,res) {    
