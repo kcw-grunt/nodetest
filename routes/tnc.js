@@ -126,7 +126,7 @@ tnc.on(
 				if (cutStr.length > 5  && cutStr.length < 15 && cutStr.indexOf('NOCALL') == -1 ){
 					cutStr = cutStr.replace('MYCALL','');
 					if (cutStr.includes('-')) {
-						nodeSSID = cutStr.split('-').pop();
+						nodeSSID = parseInt(cutStr.split('-').pop(),10);
 						nodeCallsign = cutStr.split('-')[0];
 						console.log('CALLSIGN:' + nodeCallsign + '\nSSID:' + nodeSSID);
 					} else if (cutStr.length > 4) {
