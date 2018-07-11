@@ -1,0 +1,6 @@
+#30-kenwood-thd72a-071018.rules#
+#
+#ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4",ATTRS{idProduct}=="ea60", SYMLINK+="KENWOOD_TH-D72A"
+#This rule is created based on the CP UART Chip NOT the HT.
+#There is a small chance that another device plugged in
+# will have the same chip can bork the Onda Terminal
