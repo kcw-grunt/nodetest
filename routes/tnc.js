@@ -110,16 +110,16 @@ tnc.on(
 	}
 );
 
-// tnc.on(
-// 	"data",
-// 	function(data) {
-// 		if(data == '\r\n') {
-// 			console.log('Data line:' + dataLine);
-// 		} else {
-// 			dataLine.push(data);
-// 		}
-//  	}
-// )
+tnc.on(
+	"rawdata",
+	function(data) {
+		if(data == '\r\n') {
+			console.log('Data line:' + dataLine);
+		} else {
+			dataLine.push(data);
+		}
+ 	}
+)
  
 router.get('/', function (req,res) {    
 	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
