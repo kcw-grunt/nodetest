@@ -1,17 +1,12 @@
+'use strict';
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var util = require('util');
 
-const delay = ms => {
-	return new Promise((resolve) => {
-		setTimeout(resolve,ms);
-	});
-};
-
-const Delimiter = require('@serialport/parser-delimiter')
-const parser = port.pipe(new Delimiter({ delimiter: '\n' }))
-parser.on('data', console.log)
+// const Delimiter = require('@serialport/parser-delimiter')
+// const parser = port.pipe(new Delimiter({ delimiter: '\n' }))
+// parser.on('data', console.log)
 
 var devicePath = '/dev/KENWOOD_TH-D72A';
 // var osvar = process.platform;
@@ -37,9 +32,9 @@ setupTHD72A();
 
 function setupTHD72A() {
 	if (tnc) {
-		tnc.sendRAWPacket('KISS ON');
+		tnc.sendRAWString('KISS ON');
 		    setTimeout(function() {
-			  tnc.sendRAWPacket('RESTART');
+			  tnc.sendRAWString('RESTART');
 		}, 4000);
 	}
 }
@@ -138,7 +133,7 @@ tnc.on(
 // myPort.on('open', showPortOpen);    // called when the serial port opens
 // myPort.on('close', showPortClose);  // called when the serial port closes
 // myPort.on('error', showError);   // called when there's an error with the serial port
-parser.on('data', readSerialData); 
+//parser.on('data', readSerialData); 
 
 function readSerialData(data) {
 	console.log(data);
@@ -188,58 +183,3 @@ router.post('/sendmessage', function (req,res) {
 
 module.exports = router;
  
-'use strict';
-var express = require('express');
-var router = express.Router(); 
-var serialport = require('serialport');
-var SerialPort = serialport.SerialPort;
-//const Readline = SerialPort.parsers.Readline;  
-var devicePath = '/dev/KENWOOD_TH-D72A';
-var dataLine = [];
-// var osvar = process.platform;
-// console.log(osvar);
-// if (osvar == 'darwin') {
-// 	console.log("Using Mac OS");
-//     devicePath = '/dev/tty.SLAB_USBtoUART';
-// }else{ 
-// 	devicePath = '/dev/ttyUSB2';
-// }
-    
-
-
- 
-port.write('KISS ON\r\n', function(err) {
-  console.log('KISS ON Turned on');
-});
-
-port.write('RESTART\r\n', function(err) {
-  console.log('Restarted');
-});
-
-port.on('data', function(data) {
-
-  // if(data =='0D 0A') {
-  //   console.log('Date line:'+ dataline)
-  // } else {
-  //   dataLine.push(data);
-  // }
-  console.log('Data:', data);
-});
-
-port.on('open', function() {
-  console.log('Port Opened');
-});
-
-port.on('closed', function() {
-  console.log('Port Closed');
-});
-
-var start = Date.now();
-setInterval(function() {
-    var delta = Date.now() - start; // milliseconds elapsed since start
-     // alternatively just show wall clock time:
-    console.log(new Date().toUTCString());
-    port.write('I\r\n');
-    port.write('Hi Mom!');
-    port.write(new Buffer('Hi Mom!'));
-}, 5000); // update 
