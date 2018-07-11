@@ -129,16 +129,6 @@ tnc.on(
 		console.log('Data:',data );; 
 	}
 )
-
-// myPort.on('open', showPortOpen);    // called when the serial port opens
-// myPort.on('close', showPortClose);  // called when the serial port closes
-// myPort.on('error', showError);   // called when there's an error with the serial port
-//parser.on('data', readSerialData); 
-
-function readSerialData(data) {
-	console.log(data);
-  }
-//tnc.parser.on('data', console.log);
  
 router.get('/', function (req,res) {    
 	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
@@ -167,14 +157,6 @@ router.post('/sendmessage', function (req,res) {
 		res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
 	} 
   });
-
-  router.post('/cmd', function (req,res) {
-	  var cmd = req.body.d72cmd;
-	  console.log('in cmd: '+cmd);
-	tnc.sendRAWPacket(''+cmd);
-//('E ON HBAUD 9600 M ON PASSALL ON KISS ON RESTART');
-  });
-
 
   //////Error Housekeeping
   process.on('unhandledRejection', (reason, promise) => {
