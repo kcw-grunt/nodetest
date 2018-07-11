@@ -3,11 +3,7 @@ var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var util = require('util');
-
-// const Delimiter = require('@serialport/parser-delimiter')
-// const parser = port.pipe(new Delimiter({ delimiter: '\n' }))
-// parser.on('data', console.log)
-
+var dataLine = [];
 var devicePath = '/dev/KENWOOD_TH-D72A';
 // var osvar = process.platform;
 // console.log(osvar);
@@ -28,6 +24,7 @@ var tnc = new ax25.kissTNC(
 	}
 );
 
+
 setupTHD72A();
 
 function setupTHD72A() {
@@ -38,6 +35,8 @@ function setupTHD72A() {
 		}, 4000);
 	}
 }
+
+
 
 function updateLogText(str) {
 	radiodata = str; 
@@ -126,8 +125,13 @@ tnc.on(
 tnc.on(
 	"data",
 	function(data) {
-		console.log('Data:',data );; 
-	}
+
+		if(data == '\r\n') {
+			console.log('Data line:' + dataLine);
+		} else {
+			dataLine.push(data);
+		}
+ 	}
 )
  
 router.get('/', function (req,res) {    
