@@ -125,7 +125,6 @@ tnc.on(
 tnc.on(
 	"data",
 	function(data) {
-
 		if(data == '\r\n') {
 			console.log('Data line:' + dataLine);
 		} else {
