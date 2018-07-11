@@ -35,14 +35,15 @@ var tnc = new ax25.kissTNC(
 
 setupTHD72A();
 
-const setupTHD72A = async () => {
+function setupTHD72A() {
 	if (tnc) {
 		tnc.sendRAWPacket('KISS ON');
-		await delay(2000);
-		tnc.sendRAWPacket('RESTART');
-		await delay(4000);
+		    setTimeout(function() {
+			  tnc.sendRAWPacket('RESTART');
+		}, 4000);
 	}
 }
+
 function updateLogText(str) {
 	radiodata = str; 
 	//.res.render('tnc', {remote_response:radiodata+"\n"+Date.now()}); //, remote_response:ct 
