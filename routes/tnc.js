@@ -3,12 +3,13 @@ var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
 var util = require('util');
-var dataLine = [];
+var dataLine = '';
 var devicePath = '/dev/KENWOOD_TH-D72A';
 
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
-
+var nodeCallsign = "";
+var nodeSSID = 0;
 
 var tnc = new ax25.kissTNC(
 	{	serialPort : devicePath,
@@ -24,7 +25,15 @@ function setupTHD72A() {
 		    setTimeout(function() {
 			  tnc.sendRAWString('RESTART');
 		}, 4000);
+		getCallSign();
 	}
+}
+
+function getCallSign() {
+	if (tnc) {
+		tnc.sendRAWString('MYCALL'); 
+	}
+
 }
 
 function updateLogText(str) {
@@ -32,30 +41,27 @@ function updateLogText(str) {
 	//.res.render('tnc', {remote_response:radiodata+"\n"+Date.now()}); //, remote_response:ct 
 }
 
-function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) { 
-	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
-	var ssid_s = parseInt(sssid, 10);
-	var ssid_d = parseInt(dssid, 10);
-	scs= ""+scs;
+function sendTestMessage(dcs,dssid,message_tx,callback) { 
+	console.log(dcs+ dssid +"\n"+ message_tx+ "\n" ); 
+	var ssid_d = parseInt(dssid, 10); 
 	dcs = ""+dcs;
 	message_tx = ""+message_tx;
 	messageContent = message_tx;
 
 	var testpacket = new ax25.Packet(
-		{	'sourceCallsign' : scs,
-			'sourceSSID' : ssid_s,
+		{	'sourceCallsign' : nodeCallsign,
+			'sourceSSID' : nodeSSID,
 			'destinationCallsign' : dcs,
 			'destinationSSID' : ssid_d,
 			'type' : ax25.Defs.U_FRAME_UI,
 			'infoString' : message_tx
 		}
-	);
-    currentPacket = testpacket; 
+	); 
 	var frame = testpacket.assemble();
 	tnc.send(frame);
 	console.log('Test message sent:'+ frame);
 	radiodata = 'Test message sent' + frame; 
-	callback();
+	//callback();
 }  
  
 tnc.on(
@@ -111,18 +117,38 @@ tnc.on(
 );
 
 tnc.on(
-	"rawdata",
+	"raw",
 	function(data) {
-		if(data == '\r\n') {
-			console.log('Data line:' + dataLine);
+		if(data.toString() == '\r\n' || data.toString() == '\n') {
+			////Parser to find the Callsign
+			if ( dataLine.indexOf( 'MYCALL' ) > -1 ) {
+				var cutStr = dataLine.replace(/\s/g, '');
+				if (cutStr.length > 5  && cutStr.length < 15 && cutStr.indexOf('NOCALL') == -1 ){
+					cutStr = cutStr.replace('MYCALL','');
+					if (cutStr.includes('-')) {
+						nodeSSID = cutStr.split('-').pop();
+						nodeCallsign = cutStr.split('-')[0];
+						console.log('CALLSIGN:' + nodeCallsign + '\nSSID:' + nodeSSID);
+					} else if (cutStr.length > 4) {
+						nodeCallsign = cutStr;
+						console.log('CALLSIGN:' + cutStr);
+					}
+				}
+			}
+			dataLine = "";
 		} else {
-			dataLine.push(data);
+			dataLine += data.toString();
+			//console.log("Partial:",dataLine);
 		}
  	}
 )
  
-router.get('/', function (req,res) {    
-	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
+router.get('/', function (req,res) { 
+	
+	if(nodeSSID = 0) {
+		nodeSSID = '';
+	}
+	res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent,sourcecallsign:nodeCallsign,sourceID:nodeSSID,remote_response:radiodata+"\n"+Date.now()});
 });
  
 router.post('/', function (req,res) {
@@ -130,22 +156,20 @@ router.post('/', function (req,res) {
 });
 
 router.post('/sendmessage', function (req,res) {
-	var sourceid = req.body.ssids
-	var sourcecallsign = ""+req.body.srccs
 	var destcallsign = ""+req.body.destcs
 	var destssid = req.body.ssidd
 	var messagetext = ""+req.body.message
 
-	if ( sourceid.length > 0 && destssid.length > 0 && sourcecallsign.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
+	if ( destssid.length > 0 && destcallsign.length > 0 && messagetext.length > 0) {
 		console.log('Beacon Ping');	
 		updateLogText('Beacoon Ping');
-		sendTestMessage(sourcecallsign,sourceid,destcallsign,destssid,messagetext, function() {
-			res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
+		sendTestMessage(nodeCallsign,destcallsign,destssid,messagetext, function() {
+			res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent,sourcecallsign:nodeCallsign,remote_response:radiodata+"\n"+Date.now()});
 		});
 	} else {
 		console.log('STM Failed');
 		updateLogText('STM Failed');
-		res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent, remote_response:radiodata+"\n"+Date.now()});
+		res.render('tnc', { title: 'TNC Messaging', message_tx:messageContent,sourcecallsign:nodeCallsign,remote_response:radiodata+"\n"+Date.now()});
 	} 
   });
 

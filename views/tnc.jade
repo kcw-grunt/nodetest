@@ -2,27 +2,18 @@ extends layout
 
 block content
   body 
-  h1.h1main #{title}
+  h1.h1main #{title} : #{sourcecallsign} #{sourceID}
     br
     br
     .row
         .column-tnc
           form(method="POST" action="/tnc/sendmessage")
             div.form-group
-              label.label.h2  Source Callsign: 
-              input.input.main(style="text-transform: uppercase",maxlength="6",type="text", name="srccs", placeholder="KM6TIG")
-              label.label.h2       SSID: 
-              select.select(name="ssids")
-                -for(var i = 1;i<16;i++){
-                option(value="#{i}") #{i}
-                -}
-            br
-            div.form-group
               label.label.h2  Destination Callsign: 
               input.input.main(style="text-transform: uppercase",maxlength="6",type="text", name="destcs", placeholder="KM6TIG")
               label.label.h2       SSID: 
               select.select(name="ssidd")
-                -for(var i = 1;i<16;i++){
+                -for(var i = 0;i<16;i++){
                 option(value="#{i}") #{i}
                 -}
             br
