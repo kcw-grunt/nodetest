@@ -5,14 +5,6 @@ var ax25 = require('th-d72-ax25');
 var util = require('util');
 var dataLine = [];
 var devicePath = '/dev/KENWOOD_TH-D72A';
-// var osvar = process.platform;
-// console.log(osvar);
-// if (osvar == 'darwin') {
-// 	console.log("Using Mac OS");
-//     devicePath = '/dev/tty.SLAB_USBtoUART';
-// }else{ 
-// 	devicePath = '/dev/ttyUSB0';
-// }
 
 var radiodata ="--NO RESPONSE--";
 var messageContent = ""; 
@@ -23,8 +15,7 @@ var tnc = new ax25.kissTNC(
 		baudRate : 9600
 	}
 );
-
-
+ 
 setupTHD72A();
 
 function setupTHD72A() {
@@ -36,13 +27,10 @@ function setupTHD72A() {
 	}
 }
 
-
-
 function updateLogText(str) {
 	radiodata = str; 
 	//.res.render('tnc', {remote_response:radiodata+"\n"+Date.now()}); //, remote_response:ct 
 }
-
 
 function sendTestMessage(scs,sssid,dcs,dssid,message_tx,callback) { 
 	console.log(scs + sssid + "\n"+ dcs+ dssid +"\n"+ message_tx+ "\n" );
@@ -117,8 +105,8 @@ tnc.on(
 tnc.on(
 	"sent",
 	function() {
-		console.log(tnc.serialPort + "TNC sent " ); 
-		updateLogText(tnc.serialPort + "TNC sent " );  
+		console.log(tnc.serialPort + "data sent " ); 
+		updateLogText(tnc.serialPort + "data sent " );  
 	}
 );
 
