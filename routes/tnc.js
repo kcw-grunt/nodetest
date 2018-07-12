@@ -2,6 +2,11 @@
 var express = require('express');
 var router = express.Router();
 var ax25 = require('th-d72-ax25');
+
+//thax25 = require("./th-d72a_modules/th-D72a-index.js");
+
+
+
 var util = require('util');
 var dataLine = '';
 var devicePath = '/dev/KENWOOD_TH-D72A';
@@ -11,6 +16,7 @@ var messageContent = "";
 var nodeCallsign = "";
 var nodeSSID = 0;
 
+ 
 var tnc = new ax25.kissTNC(
 	{	serialPort : devicePath,
 		baudRate : 9600
